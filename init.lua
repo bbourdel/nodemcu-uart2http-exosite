@@ -18,6 +18,7 @@ tmr.alarm(1, 333, 1, function()
     STATUS_REGISTER=bit.bor(STATUS_REGISTER,HTTP_REGISTER,SSID_REGISTER)
 end)
 
+-- formating (then sending) POST method : http info in "BODY"
 send_data = function(BODY)
     HTTP_WR_HDR = "POST /onep:v1/stack/alias HTTP/1.1\r\nHost: m2.exosite.com\r\nX-Exosite-CIK: " .. CIK .. "\r\nContent-Type: application/x-www-form-urlencoded; charset=utf-8\r\nContent-Length: <CONLEN>\r\n\r\n"
     CONLEN = string.len(BODY)
@@ -26,11 +27,14 @@ send_data = function(BODY)
     push_request(REQ)
 end
 
+-- formating (then sending) GET methode : http info in "dataz"
 read_data = function(dataz)
     HTTP_RD_HDR = "GET /onep:v1/stack/alias?" .. dataz .. " HTTP/1.1\r\nHost: m2.exosite.com\r\nX-Exosite-CIK: " .. CIK .. "\r\nAccept: application/x-www-form-urlencoded; charset=utf-8\r\n\r\n"
     REQ = HTTP_RD_HDR
     push_request(REQ)
 end
+
+-- send "dataz" request to web serveur
 
 push_request = function(dataz)
     -- if connected then send request to server
